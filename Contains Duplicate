@@ -1,0 +1,15 @@
+'''
+217. Contains Duplicate
+
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+'''
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+            d = {}
+            for n in nums:
+                if  n in d:
+                    return bool(1)
+                else:
+                    d[n] = 0
+            return bool(0)
+           
