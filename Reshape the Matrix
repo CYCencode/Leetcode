@@ -1,0 +1,31 @@
+'''
+566. Reshape the Matrix
+
+In MATLAB, there is a handy function called reshape which can reshape an m x n matrix into a new one with a different size r x c keeping its original data.
+
+You are given an m x n matrix mat and two integers r and c representing the number of rows and the number of columns of the wanted reshaped matrix.
+
+The reshaped matrix should be filled with all the elements of the original matrix in the same row-traversing order as they were.
+
+If the reshape operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix.
+'''
+
+# Runtime : 124 ms,Memory Usage : 14.7 MB
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        flat = [item for sublist in mat for item in sublist]
+        if r * c != len(flat): return mat    
+        output = [flat[(row *c) :c * (row +1)] for row in range(r)]
+        return output
+        
+# Runtime : 257 ms,Memory Usage : 14.7 MB
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
+        if m*n != r*c:
+            return mat
+        # 建立新框架 : 
+        reshaped_output = [[0]*c for _ in range(r)]
+        for i in range(m*n):
+            reshaped_output[i//c][i%c] = mat[i // n][i % n]
+        return reshaped_output
