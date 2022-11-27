@@ -1,0 +1,36 @@
+'''
+278. First Bad Version
+You are a product manager and currently leading a team to develop a new product. Unfortunately, 
+the latest version of your product fails the quality check. Since each version is developed based on the previous version,
+all the versions after a bad version are also bad.
+
+Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. 
+You should minimize the number of calls to the API.
+'''
+# 以binary search概念搜尋
+# Runtime : 47 ms,Memory Usage	: 13.9 MB
+# 為滿足2^32運算容量限制，計算時不是採用(low+high)/2
+# 而是low + (high-low)//2 避免直接加總時溢出
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        lower_bound = 0
+        # 搜n-1個即可知道哪裡是first bad version
+        upper_bound = n-1
+        while lower_bound <= upper_bound:
+            mid = lower_bound + (upper_bound-lower_bound)//2
+            # 若mid為bad，good/bad門檻會在左側
+            if isBadVersion(mid):
+                upper_bound = mid-1
+            # 否則要往右邊尋找good/bad門檻
+            else:
+                lower_bound = mid+1
+        # 當依序、找到第一個mid bad，則回傳其左側的位置idx
+        return lower_bound
+
+# bisect package
+# Runtime : 52 ms,Memory Usage	: 13.9 MB
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        return bisect_left(range(n), True, 1, key=isBadVersion)
