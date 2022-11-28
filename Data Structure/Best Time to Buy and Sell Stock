@@ -9,3 +9,22 @@ Return the maximum profit you can achieve from this transaction. If you cannot a
 
 '''
 
+# use while all right boundery + liimted left boundery
+# Runtime : 3016 ms,Memory Usage	: 25.1 MB
+class Solution:
+    def maxProfit(self,prices):
+        left = 0
+        right = 1
+        # 當無獲利(profit<=0)，歸為0
+        max_profit = 0
+        while right<len(prices):
+            current_profit = prices[right] - prices[left]
+            if prices[right]>prices[left]:
+                max_profit = max(max_profit, current_profit)
+            # 當左大於右，接下來的搜尋可以省略左邊
+            else:
+                left = right
+            # 逐次往右尋找並更新max profit
+            right += 1
+        
+        return max_profit
