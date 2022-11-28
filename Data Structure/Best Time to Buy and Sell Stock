@@ -43,3 +43,16 @@ class Solution:
         return max_profit
             
             
+# 不動用function的改良版
+# Runtime : 993 ms,Memory Usage	: 25.1 MB
+class Solution:
+    def maxProfit(self,prices):
+        # 先設定最大利潤、最小基底
+        max_profit, min_base = 0, prices[0]
+        # 依次找尋最優解，但不動用function
+        for i in range(1, len(prices)):
+            if max_profit<(prices[i]-min_base): 
+                max_profit = prices[i]-min_base
+            if min_base>prices[i]:
+                min_base = prices[i]
+        return max_profit
