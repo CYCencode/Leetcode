@@ -1,0 +1,32 @@
+'''
+977. Squares of a Sorted Array
+
+Given an integer array nums sorted in non-decreasing order, 
+return an array of the squares of each number sorted in non-decreasing order.
+'''
+# Runtime: 622 ms, Memory Usage: 16.2 MB
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        # 初始化
+        output_list = [0]*len(nums)
+        write_point = len(nums)-1
+        left_point = 0
+        right_point = len(nums)-1
+        left_square = nums[left_point]**2
+        right_square = nums[right_point]**2
+        # 頭尾比較 排序最大值
+        while write_point>=0:
+            if left_square>right_square:
+                output_list[write_point] = left_square
+                #排序後更新比較標的
+                left_point+=1
+                left_square = nums[left_point]**2
+                
+            else:
+                output_list[write_point] = right_square
+                right_point-=1
+                right_square = nums[right_point]**2
+            write_point-=1
+        return output_list
+                
+        
