@@ -17,3 +17,20 @@ class Solution:
         while nums.count(0):
             nums.remove(0) 
         nums += [0]*n
+
+# second version
+# Runtime: 465 ms,Memory Usage: 15.6 MB
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        slow = 0
+        # 限制遍歷次數 = 原始list元素個數
+        for fast in range(1,len(nums)):
+            # 檢查左右側、若左側為0且右側不為0則交換
+            if nums[fast]!=0 and nums[slow]==0:
+                nums[fast], nums[slow] = nums[slow], nums[fast]
+            
+            # 當執行完上一段，確保當前左側不為0
+            # 則繼續對下一個檢查與置換
+            if nums[slow]!=0:
+                slow+=1
+                
