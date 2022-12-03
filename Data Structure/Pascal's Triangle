@@ -7,6 +7,16 @@ eg.
 Input: numRows = 5
 Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 '''
+# naive 
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        # 建立 含有所有layer預設長度list的array
+        all_layer = [[1] * (layer+1) for layer in range(numRows)]
+        for layer in range(numRows):
+            # 頭尾不取代，保持1的狀態
+            for j in range(1,i):
+                all_layer[i][j] = all_layer[i-1][j-1] + all_layer[i-1][j]
+        return all_layer
 
 # first version
 # Runtime: 55 ms, Memory Usage: 13.9 MB
@@ -16,11 +26,26 @@ class Solution:
         all_layer = [[1]]
         # 若1層以上就要append
         if numRows > 1:
-            # append 的次數 = layers-2
+            # 要新增的layer數，排除[[1], [1,1]]，從layer 2開始
             for layer in range(2,numRows+1):
                 current_layer = [1]
+                # 當在第三層 layer = 3, 排除頭尾1, 需append (layer-2)個元素 
+                # 元素1 = 上一層的0 + 1
                 current_layer+=[last[i]+last[i+1] for i in range(layer-2)]
                 current_layer.append(1)
                 last = current_layer
                 all_layer.append(current_layer)
+        return all_layer
+        
+# second version 
+# 簡化版
+# Runtime: 52 ms, Memory Usage: 13.9 MB
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        all_layer = [[1]]
+        for layer in range(1,numRows):
+        # 頭尾置放1、在上一layer長度-1的範圍內依序加總
+            all_layer.append([1] \ 
+                            + [sum(all_layer[-1][idx:idx+2]) for idx in range(len(all_layer[-1])-1)] \
+                            + [1])
         return all_layer
