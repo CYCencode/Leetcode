@@ -20,6 +20,25 @@ Example 3:
 Input: s = "aabb"
 Output: -1
 '''
+# naive solution
+# 先遍歷字串以dictionary建立次數分配表，再依序檢查字串中的字是否只出現一次
+# Runtime: 376 ms, Memory Usage: 14.2 MB
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        d = {}
+        # 建立文字中出現過的單字次數字典
+        for l in s:
+            if l not in d:
+                d[l] = 1
+            else:
+                d[l]+=1
+        # 依序檢查出現的字母是否只出現一次
+        idx = -1
+        for i in range(len(s)):
+            if d[s[i]]==1:
+                idx = i
+                break
+        return idx
 
 # 因為測資範圍都是英文字母，將搜尋範圍縮小至26個英文字母可以大幅減低計算成本
 # (相較於遍歷每一個測資字彙)
@@ -30,3 +49,21 @@ class Solution:
         letter = list(string.ascii_letters)
         idx = [s.index(l) for l in letter if s.count(l)==1]
         return min(idx) if len(idx)>0 else -1    
+
+# 使用dictionary、set、enumerate篩選符合條件的idx
+# Runtime: 140 ms, Memory Usage: 14.2 MB
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+      d = {}
+      seen = set()
+      for idx, sub_str in enumerate(s):
+          # 若不曾看過，紀錄idx並加入看過的字母清單
+          if sub_str not in seen:
+             d[sub_str] = idx
+             seen.add(sub_str)
+          # 若出現過，則去除該獨有清單
+          elif sub_str in d:
+             del d[sub_str]
+      # 若非empty dictionary,則回傳最小的idx 
+      return min(d.values()) if d else -1
+             
