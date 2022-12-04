@@ -13,17 +13,25 @@ and the last n elements are set to 0 and should be ignored. nums2 has a length o
 '''
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        # 定義兩個list 要比較的index範圍
+        i = m-1 
+        j = n-1
+        # 在總排序長度範圍中，由最大排序到最小
+        for right in range(m+n-1, -1, -1):
+            # 若list2已無元素可比較
+            if j<0:
+                break
+            # 當list1還有元素可比較 且 list1當前值較大
+            if (i>0) and (nums1[i]>nums2[j]):
+                nums1[right] = nums1[i]
+                # 已列入排序則不再比較
+                i-=1
+            else :
+                nums1[right] = nums2[j]
+                j-=1
+                
         """
         Do not return anything, modify nums1 in-place instead.
         """
        
-        i, j = m-1, n-1
-        for right in range(m+n-1, -1, -1):
-            if j < 0:
-                break
-            if i >= 0 and nums1[i] > nums2[j]:
-                nums1[right] = nums1[i]
-                i -= 1
-            else:
-                nums1[right] = nums2[j]
-                j -= 1
+                
