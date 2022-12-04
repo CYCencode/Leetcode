@@ -21,3 +21,12 @@ Input: s = "aabb"
 Output: -1
 '''
 
+# 因為測資範圍都是英文字母，將搜尋範圍縮小至26個英文字母可以大幅減低計算成本
+# (相較於遍歷每一個測資字彙)
+# Runtime: 116 ms, Memory Usage: 14.2 MB
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        import string
+        letter = list(string.ascii_letters)
+        idx = [s.index(l) for l in letter if s.count(l)==1]
+        return min(idx) if len(idx)>0 else -1    
