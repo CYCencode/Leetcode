@@ -66,4 +66,15 @@ class Solution:
              del d[sub_str]
       # 若非empty dictionary,則回傳最小的idx 
       return min(d.values()) if d else -1
-             
+ 
+ # 使用counter + list特性簡潔的取得所需的資訊
+ class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        from collections import Counter
+        # counter會依照出現的順序計算字母出現次數
+        # items 取得相應的出現次數
+        # index 取得該字母第一次出現的位置
+        for k,v in Counter(s).items():
+           if v==1:
+              return s.index(k)
+        return -1
