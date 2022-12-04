@@ -4,9 +4,58 @@
 Given two integer arrays nums1 and nums2, return an array of their intersection.
 Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
 '''
+# 簡潔的寫法
 # 使用collection的特性取兩個counter之間的交集
+# 61 ms, Memory Usage: 14.1 MB
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
         import collections
         a,b = map(collections.Counter, (nums1,nums2))
         return list((a&b).elements())     
+
+# two point 定位點比較
+# Runtime: 103 ms, Memory Usage: 14 MB
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # 由小到大排序
+        nums1 = sorted(nums1)
+        nums2 = sorted(nums2)
+        # 從頭開始比較
+        pt1 = pt2 = 0
+        repeat_element = []
+        while True:
+            try:
+                # 若當前最小值太小，無法匹配則往右移一格
+                if nums1[pt1]>nums2[pt2]:
+                    pt2+=1
+                elif nums1[pt1]<nums2[pt2]:
+                    pt1+=1
+                # 一樣大則紀錄
+                else:
+                    repeat_element.append(nums1[pt1])
+                    pt1+=1
+                    pt2+=1
+            # 若超出任一list的比較範圍 
+            except IndexError:
+                break
+        return repeat_element
+        
+# 使用dictionary get建立計數
+# Runtime: 119 ms, Memory Usage: 14.1 MB
+ class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        counts = {}
+        repeat_element = []
+        # 建立nums1的計數紀錄
+        # 使用count設定預設值,若尚未建立則(0)+1
+        # 依序更新計數
+        for num in nums1:
+            counts[num] = counts.get(num,0)+1
+        # 依序比對nums2與nums1的交集
+        for num in nums2:
+            # 若當前值也存在nums1、則在nums1出現次數範圍內
+            # append(出現範圍次數)個當前值
+            if num in counts and counts[num]>0:
+                repeat_element.append(num)
+                counts[num]-=1
+        return repeat_element
