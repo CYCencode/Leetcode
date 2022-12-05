@@ -28,7 +28,18 @@ class Solution:
         i = 0
         while i<len(s)//2:
           mini = s[i]
-          maxi = s[-(i+1)]
+          maxi = s[-i-1]
           s[i] = maxi
-          s[-(i+1)] = mini
+          s[-i-1] = mini
           i+=1
+
+# second version
+# 使用for 替代 while
+# Runtime: 548 ms, Memory Usage: 18.4 MB
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        for i in range(len(s)//2):
+            s[i], s[-i-1] = s[-i-1], s[i]
