@@ -46,3 +46,37 @@ class Solution:
             # same as
             # ~為倒過來
             # s[i], s[~i] = s[~i], s[i]
+
+# 利用ord、chr與^=運算符號
+# Runtime: 496 ms, Memory Usage: 18.5 MB
+class Solution:
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+        """
+        n = len(s)
+        i , j = 0 , n-1
+        
+        while i<j:
+            # 將字母換成unicode形式
+            s[i] = ord(s[i])     
+            s[j] = ord(s[j])
+            # swapping operation
+            # 第一數值 1100101 (104)
+            # 第二數值 1101000 (101)
+            # 兩數之差 0001101 = 13
+            # 104 與 101差異 13
+            
+            # 經過流程後會前後互換
+            s[i]^=s[j]           
+            s[j]^=s[i]
+            s[i]^=s[j]
+            # 換回字母
+            s[i] = chr(s[i])
+            s[j] = chr(s[j])
+            i+=1                   
+            j-=1
+            
+        
+        
+        
