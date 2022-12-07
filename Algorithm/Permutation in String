@@ -17,3 +17,14 @@ Example 2:
 Input: s1 = "ab", s2 = "eidboaoo"
 Output: false
 '''
+
+# first version
+# Runtime 6340 ms, Memory 13.9MB
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        for head in range(len(s2)-len(s1)+1):  
+            if Counter(s2[head:head+len(s1)]) == Counter(s1):
+                return bool(1)
+            else:
+                continue
+        return bool(0)
