@@ -33,20 +33,21 @@ class Solution:
 # Runtime 232 ms, Memory 13.8MB
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        # 將計算範圍框在較小的範圍(用減法少去一層計算量)
-        s1_counter, s1_len = Counter(s1), len(s1)
-        for idx in range(len(s2)):
-            # 若存在一樣的元素，消除一個
-            if s2[idx] in s1_counter:
-               s1_counter[s2[idx]]-=1
-            # 進到下一輪(超過檢查長度)時
-            # 初始化，若上一輪有被扣除計算的加回去
-            if (idx>=s1_len) and (s2[idx-s1_len] in s1_counter):
-               s1_counter[s2[idx-s1_len]]+=1
-            # 若最終為平衡則true
-            if all([s1_counter[i]==0 for i in s1_counter)]):
-               return True
-         return False
+        # 建立檢查清單
+        check_list = Counter(s1)
+        # window長度
+        w = len(s1) 
+        # 對s2的元素依序檢查是否在清單內
+        for i in range(len(s2)):
+            if s2[i] in check_list:
+                check_list[s2[i]]-=1
+            # 當已到下一個window，將上一window扣除的部分復原
+            if i>=w and s2[i-w] in check_list:
+                check_list[s2[i-w]]+=1
+            # 當check_list都檢查完畢->True
+            if all([check_list[i]==0 for i in check_list]):
+                return True
+        return False
 
             
   
