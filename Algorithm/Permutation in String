@@ -39,25 +39,15 @@ class Solution:
             # 若存在一樣的元素，消除一個
             if s2[idx] in s1_counter:
                s1_counter[s2[idx]]-=1
-            # 依序檢查???
+            # 進到下一輪(超過檢查長度)時
+            # 初始化，若上一輪有被扣除計算的加回去
             if (idx>=s1_len) and (s2[idx-s1_len] in s1_counter):
                s1_counter[s2[idx-s1_len]]+=1
             # 若最終為平衡則true
-            if all()
+            if all([s1_counter[i]==0 for i in s1_counter)]):
+               return True
+         return False
+
             
-            
-  '''
-  cntr, w = Counter(s1), len(s1)   
-
-        for i in range(len(s2)):
-            if s2[i] in cntr: 
-                cntr[s2[i]] -= 1
-            if i >= w and s2[i-w] in cntr: 
-                cntr[s2[i-w]] += 1
-
-            if all([cntr[i] == 0 for i in cntr]): # see optimized code below
-                return True
-
-        return False
   
-    '''
+
