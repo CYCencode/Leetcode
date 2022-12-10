@@ -1,0 +1,44 @@
+'''
+383. Ransom Note
+
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+
+Each letter in magazine can only be used once in ransomNote.
+'''
+
+# first version 
+# 為避免計算量過大，設定單次搜尋範圍為所有搜尋元素的集合
+# 並使用while 當空間允許時執行搜尋
+# Runtime: 109 ms, Memory Usage: 14.3 MB
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        # 初始化設定最小搜尋窗格、搜索清單
+        window = len(ransomNote)
+        search_space = dict(Counter(ransomNote).items())
+        
+        epoch = 0
+        # 若尚餘搜索空間
+        while magazine[epoch*window : (epoch+1)*window]:
+            # 當搜索元素存在，扣除需要搜尋的次數
+            for k,v in search_space.items():
+                if k in magazine[epoch*window : (epoch+1)*window] and  v>0:
+                    search_space[k]-=magazine[epoch*window : (epoch+1)*window].count(k)
+                else:
+                    continue
+            # 若搜索空間已被滿足
+            if all([sub_str_v<=0 for sub_str_v in search_space.values()]):
+                return bool(1)
+            # 若剩餘空間足夠搜尋
+            elif len(magazine[(epoch+1) * window:])>=sum([v for v in search_space.values() if v>0]):
+                epoch+=1
+                continue
+            # 若不滿足且不足搜尋
+            else:
+                return bool(0)
+
+# second version
+# 使用set將搜尋次數限制在短字串的可能元素中(最多進行26次count計算)
+# Runtime: 43 ms, Memory Usage: 14.1 MB
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        return all([ransomNote.count(sub_str)<=magazine.count(sub_str) for sub_str in set(ransomNote)])
