@@ -7,7 +7,7 @@ Each letter in magazine can only be used once in ransomNote.
 '''
 
 # first version 
-# 為避免計算量過大，設定單次搜尋範圍為所有搜尋元素的集合
+# 為避免計算量過大，設定單次搜尋範圍為所有搜尋元素的長度
 # 並使用while 當空間允許時執行搜尋
 # Runtime: 109 ms, Memory Usage: 14.3 MB
 class Solution:
