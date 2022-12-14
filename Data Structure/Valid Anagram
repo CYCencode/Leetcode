@@ -24,3 +24,6 @@ class Solution(object):
         :rtype: bool
         """
         return sorted(s)==sorted(t)
+        
+# 一行寫法中，使用counter運算較久 但記憶體使用較低
+# Runtime: 49 ms, Memory Usage: 13.7 MB
