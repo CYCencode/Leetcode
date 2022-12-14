@@ -9,21 +9,14 @@ The reshaped matrix should be filled with all the elements of the original matri
 
 If the reshape operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output the original matrix.
 '''
-# 依序層次(row)寫入
-# Runtime : 124 ms,Memory Usage : 14.7 MB
-class Solution:
-    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
-        flat = [item for sublist in mat for item in sublist]
-        if r * c != len(flat): return mat    
-        output = [flat[(row *c) :c * (row +1)] for row in range(r)]
-        return output
+
 
 # 依序元素寫入
-# Runtime : 257 ms,Memory Usage : 14.7 MB
+# Runtime : 98 ms,Memory Usage : 14.7 MB
 class Solution:
     def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
         m, n = len(mat), len(mat[0])
-        if m*n != r*c:
+        if (m*n != r*c) or (r==c==1):
             return mat
         # 建立新框架 : 
         reshaped_output = [[0]*c for _ in range(r)]
