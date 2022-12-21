@@ -35,6 +35,7 @@ class Solution:
         return map(list, tuples)
         
 # itertools解法
+# Runtime : 88 ms,Memory Usage : 14.6 MB
 class Solution:
     def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
         if r * c != len(nums) * len(nums[0]):
