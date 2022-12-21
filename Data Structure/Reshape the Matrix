@@ -33,3 +33,11 @@ class Solution:
             return nums
         tuples = zip(*([iter(flat)] * c))
         return map(list, tuples)
+        
+# itertools解法
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        if r * c != len(nums) * len(nums[0]):
+            return nums
+        it = itertools.chain(*nums)
+        return [list(itertools.islice(it, c)) for _ in range(r)]
