@@ -23,3 +23,13 @@ class Solution:
         for i in range(m*n):
             reshaped_output[i//c][i%c] = mat[i // n][i % n]
         return reshaped_output
+
+# 使用zip + iter + map : 若測資改成大資料效果應會差很多
+# Runtime : 98 ms,Memory Usage : 14.6 MB
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        flat = sum(nums, [])
+        if len(flat) != r * c:
+            return nums
+        tuples = zip(*([iter(flat)] * c))
+        return map(list, tuples)
