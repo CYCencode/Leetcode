@@ -1,0 +1,10 @@
+## input : 
+## nums = [3,2,2,3] , val = 3
+
+## output :
+## nums = [2,2]
+
+# solution 1 : runtime 23ms, memory 13.2MB
+def removeElement(nums,val):
+  while val in nums:
+    nums.remove(val)
